@@ -1,0 +1,24 @@
+<---------------folder structure--------------->
+# line is represented by the coordinates of the two end-points on an image boundary
+
+ICCV2017_JTLEE_images/                      # images
+gtimg/                                      # images with ground-truth lines
+
+edge/                                       # edge detection results(HED)
+
+data/                                       # preprocessed data
+    DNet/
+        detector_test_candidates.pickle     # candidate lines for test
+        detector_train_candidates.pickle    # candidate lines for training DNet (positive line set and negative line set)
+    RNet/
+        pickle/
+              pos/                          # candidate lines for training RNet (positive line set)
+              neg/                          # candidate lines for training RNet (negative line set)
+    MNet/
+        pickle/
+               pos/                         # candidate lines for training MNet (positive line set)
+               neg/                         # candidate lines for training MNet (negative line set)
+    train.pickle                            # train datalist with image path and ground-truth lines
+    test.pickle                             # test datalist with image path and ground-truth lines
+
+

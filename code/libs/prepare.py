@@ -1,8 +1,6 @@
 from dataset import *
-from post_process import Post_Process_NMS
 from visualize import *
 from forward import *
-from evaluation.eval_func import *
 
 # utils
 from libs.utils import _init_fn
@@ -19,11 +17,19 @@ def prepare_dataloader(cfg, dict_DB):
                                                   worker_init_fn=_init_fn)
         dict_DB['trainloader'] = trainloader
 
+        val_dataset = Train_Dataset_SLNet(cfg, mode='val')
+        valloader = torch.utils.data.DataLoader(dataset=val_dataset,
+                                                  batch_size=cfg.batch_size['img'],
+                                                  shuffle=True,
+                                                  num_workers=cfg.num_workers,
+                                                  worker_init_fn=_init_fn)
+        dict_DB['valloader'] = valloader      
+
     # test dataloader
     if cfg.dataset == 'SEL':
         dataset = SEL_Test_Dataset(cfg)
         testloader = torch.utils.data.DataLoader(dataset=dataset,
-                                                 batch_size=cfg.batch_size['img'],
+                                                 batch_size=cfg.batch_test_size['img'],
                                                  shuffle=False,
                                                  num_workers=cfg.num_workers,
                                                  worker_init_fn=_init_fn)
@@ -51,20 +57,9 @@ def prepare_model(cfg, dict_DB):
 
     return dict_DB
 
-
-def prepare_postprocessing(cfg, dict_DB):
-
-    dict_DB['NMS_process'] = Post_Process_NMS(cfg=cfg)
-    return dict_DB
-
 def prepare_visualization(cfg, dict_DB):
 
     dict_DB['visualize'] = Visualize_plt(cfg=cfg)
-    return dict_DB
-
-def prepare_evaluation(cfg, dict_DB):
-    dict_DB['eval_func'] = Evaluation_Function(cfg=cfg)
-
     return dict_DB
 
 def prepare_training(cfg, dict_DB):

@@ -72,7 +72,9 @@ def create_test_dict():
 
     out = {'cls': {},
            'reg': {},
-           'pos': {}}  # detected lines
+           'left': {},
+           'middle': {},
+           'right': {}}  # detected lines
 
     # pred
     out['cls'] = torch.FloatTensor([]).cuda()

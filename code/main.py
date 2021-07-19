@@ -17,6 +17,8 @@ def main_train(cfg, dict_DB):
     train_process.run()
 
 def main():
+    #setting wandb
+    wandb.init(project="slnet", entity="shinebobo")
 
     # Config
     cfg = Config()
@@ -30,8 +32,6 @@ def main():
     dict_DB = prepare_visualization(cfg, dict_DB)
     dict_DB = prepare_dataloader(cfg, dict_DB)
     dict_DB = prepare_model(cfg, dict_DB)
-    dict_DB = prepare_postprocessing(cfg, dict_DB)
-    dict_DB = prepare_evaluation(cfg, dict_DB)
     dict_DB = prepare_training(cfg, dict_DB)
 
     if 'test' in cfg.run_mode:

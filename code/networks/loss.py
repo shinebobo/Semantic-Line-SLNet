@@ -25,12 +25,13 @@ class Loss_Function(nn.Module):
     def __init__(self):
         super(Loss_Function, self).__init__()
         self.reg_loss = regression_loss()
-        self.cls_loss = nn.BCELoss()
+        self.cls_loss = nn.NLLLoss()
 
     def forward(self, output, gt_cls, gt_reg):
 
-        L1 = self.cls_loss(output['cls'], gt_cls[0])
+        val, idx=torch.max(gt_cls[0],1)
+        L1 = self.cls_loss(output['cls'], idx)
         L2 = self.reg_loss(output['reg'], gt_reg[0])
 
-        return L1 + L2, L1, L2
+        return (L1 + L2), L1, L2
 

@@ -1,5 +1,10 @@
 from libs.utils import *
 
+
+import numpy as np
+# to be removed
+
+
 class Forward_Model(object):
     def __init__(self, cfg):
         self.cfg = cfg
@@ -15,9 +20,9 @@ class Forward_Model(object):
             batch_line_pts = line_pts[:, start:end, :]
 
             batch_out = model(img=img,
-                              line_pts=batch_line_pts,
-                              feat1=feat1, feat2=feat2)
-
+                                line_pts=batch_line_pts,
+                                feat1=feat1, feat2=feat2)
+                            
             out['cls'] = torch.cat((out['cls'], batch_out['cls']), dim=0)
             out['reg'] = torch.cat((out['reg'], batch_out['reg']), dim=0)
 

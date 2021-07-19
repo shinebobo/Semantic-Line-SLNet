@@ -1,6 +1,7 @@
 import torch
 from networks.detector import SLNet
 from networks.loss import *
+from metrics import Metric
 
 def load_SLNet_for_test(cfg, dict_DB):
 
@@ -8,7 +9,7 @@ def load_SLNet_for_test(cfg, dict_DB):
         checkpoint = torch.load(cfg.paper_weight_dir + 'checkpoint_SLNet_paper')
     else:
         # select ckpt from output_dir
-        checkpoint = torch.load(cfg.weight_dir + '')
+        checkpoint = torch.load(cfg.weight_dir + 'checkpoint_SLNet_final')
     model = SLNet(cfg=cfg)
 
     model.load_state_dict(checkpoint['model'], strict=False)
@@ -45,5 +46,6 @@ def load_SLNet_for_train(cfg, dict_DB):
     dict_DB['optimizer'] = optimizer
     dict_DB['scheduler'] = scheduler
     dict_DB['loss_fn'] = loss_fn
+    dict_DB['metric']=Metric()
 
     return dict_DB
